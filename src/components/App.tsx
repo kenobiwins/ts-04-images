@@ -1,26 +1,19 @@
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { PER_PAGE, getImages } from 'service/API';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
 import { Loader } from './Loader/Loader';
 import { PER_PAGE as paginationLimit } from 'service/API';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
 import { STATUS } from 'constants/status.constants';
+import { IImage } from 'types/interfaces';
 
-export const App = () => {
+export const App: FC = () => {
   const [q, setQ] = useState('');
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<IImage[]>([]);
   const [status, setStatus] = useState(STATUS.idle);
   const [page, setPage] = useState(1);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
-
-  // useEffect(() => {
-  //   if (isFirstLoad) {
-  //     return;
-  //   }
-  // }, [isFirstLoad]);
 
   useEffect(() => {
     if (isFirstLoad) {
@@ -38,9 +31,11 @@ export const App = () => {
           setImages(prevImages => {
             return [
               ...prevImages,
-              ...hits.map(({ id, webformatURL, largeImageURL, tags }) => {
-                return { id, webformatURL, largeImageURL, tags };
-              }),
+              ...hits.map(
+                ({ id, webformatURL, largeImageURL, tags }: IImage) => {
+                  return { id, webformatURL, largeImageURL, tags };
+                }
+              ),
             ];
           });
           setStatus(STATUS.resolved);
@@ -51,7 +46,7 @@ export const App = () => {
         }
 
         setImages(
-          hits.map(({ id, webformatURL, largeImageURL, tags }) => {
+          hits.map(({ id, webformatURL, largeImageURL, tags }: IImage) => {
             return { id, webformatURL, largeImageURL, tags };
           })
         );
@@ -65,7 +60,7 @@ export const App = () => {
     return;
   }, [q, page, isFirstLoad]);
 
-  const handleSubmit = async searchQuery => {
+  const handleSubmit = async (searchQuery: string) => {
     if (q === searchQuery) {
       return;
     }
@@ -75,14 +70,13 @@ export const App = () => {
     setPage(1);
   };
 
-  const handleLoadMore = () => {
+  const handleLoadMore = (): void => {
     setStatus(STATUS.pending);
     setPage(page + 1);
   };
 
   return (
     <>
-      {/* <ToastContainer /> */}
       <Searchbar onSubmit={handleSubmit} />
 
       {!isFirstLoad && images.length > 0 && <ImageGallery images={images} />}

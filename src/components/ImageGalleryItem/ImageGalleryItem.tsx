@@ -1,26 +1,23 @@
-import PropTypes from 'prop-types';
 import { Modal } from 'components/Modal/Modal';
 import { ImageGalleryItemStyle } from './ImageGalleryItem.styled';
 import { UseToggleModal } from 'hooks/useToggle.hooks';
+import { FC } from 'react';
+import { IImage } from 'types/interfaces';
 
-export const ImageGalleryItem = ({ webURL, tags, largeURL }) => {
+export const ImageGalleryItem: FC<
+  Pick<IImage, 'largeImageURL' | 'tags' | 'webformatURL'>
+> = ({ webformatURL, tags, largeImageURL }) => {
   const { isOpen, open, close } = UseToggleModal();
   return (
     <>
       <ImageGalleryItemStyle>
-        <img src={webURL} alt={tags} onClick={open} />
+        <img src={webformatURL} alt={tags} onClick={open} />
         {isOpen && (
           <Modal closeModal={close}>
-            <img src={largeURL} alt={tags} />
+            <img src={largeImageURL} alt={tags} />
           </Modal>
         )}
       </ImageGalleryItemStyle>
     </>
   );
-};
-
-ImageGalleryItem.propTypes = {
-  largeURL: PropTypes.string.isRequired,
-  tags: PropTypes.string.isRequired,
-  webURL: PropTypes.string.isRequired,
 };

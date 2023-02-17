@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 import {
   SearchForm,
@@ -8,14 +7,20 @@ import {
   SearchbarStyle,
 } from './Searchbar.styled';
 
-export const Searchbar = ({ onSubmit }) => {
+interface IProps {
+  onSubmit: (searchQuery: string) => Promise<void>;
+}
+
+export const Searchbar = ({ onSubmit }: IProps) => {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleInput = ({ currentTarget: { value } }) => {
+  const handleInput: React.ChangeEventHandler<HTMLInputElement> = ({
+    currentTarget: { value },
+  }) => {
     setSearchQuery(value);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault();
     if (searchQuery.trim() === '') {
       return;
@@ -43,6 +48,6 @@ export const Searchbar = ({ onSubmit }) => {
   );
 };
 
-Searchbar.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
+// Searchbar.propTypes = {
+//   onSubmit: PropTypes.func.isRequired,
+// };
