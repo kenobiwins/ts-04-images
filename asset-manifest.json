@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/ts-04-images/static/css/main.c3d5249d.css",
+    "main.js": "/ts-04-images/static/js/main.830bb4ee.js",
+    "index.html": "/ts-04-images/index.html",
+    "main.c3d5249d.css.map": "/ts-04-images/static/css/main.c3d5249d.css.map",
+    "main.830bb4ee.js.map": "/ts-04-images/static/js/main.830bb4ee.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c3d5249d.css",
+    "static/js/main.830bb4ee.js"
+  ]
+}
